@@ -18,7 +18,7 @@ class BaseModel:
     def __str__(self):
         """
         """
-        return f'[<{self.__class__.__name__}>] (<{self.id}>) <{self.__dict__}>'
+        return f'[{self.__class__.__name__}] ({self.id}) {self.__dict__}'
 
     def save(self):
         """
@@ -29,8 +29,9 @@ class BaseModel:
         """
         """
         new_dict = self.__dict__.copy()
-        new_dict['__class__'] = type(self).__name__
-        new_dict['created_at'] = self.created_at.isoformat()
-        new_dict['updated_at'] = self.updated_at.isoformat()
+        new_dict.update({
+                "__class__": self.__class__.__name__,
+                "updated_at": self.updated_at.isoformat(),
+                "created_at": self.created_at.isoformat()
+        })
         return new_dict
-
