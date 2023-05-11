@@ -28,6 +28,7 @@ class FileStorage:
             json.dump(data, file)
 
     def reload(self):
+        import importlib
         """
         Deserializes the JSON file to __objects
         (only if the JSON file (__file_path) exists;
@@ -41,7 +42,12 @@ class FileStorage:
                 json_dict = json.load(file)
                 for key, value in json_dict.items():
                     class_name, obj_id = key.split(".")
+                    module = importlib.import_module('models.' + class_name)
+                    cls = getattr(module, class_name)
+                    FileStorage.__objects[key] = cls(**value)
+                    '''
                     class_ = eval(class_name)
                     FileStorage.__objects[key] = class_(**value)
+                    '''
         except FileNotFoundError:
             pass
