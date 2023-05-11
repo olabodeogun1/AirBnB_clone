@@ -1,10 +1,8 @@
 #!/usr/bin/python3
-
+"""
+File Storage model
+"""
 import json
-import os
-
-"""
-"""
 
 
 class FileStorage:
@@ -35,19 +33,29 @@ class FileStorage:
         otherwise, do nothing.
         If the file doesn’t exist, no exception should be raised)
         """
+        from models.base_model import BaseModel
+        from models.user import User
+        from models.city import City
+        from models.place import Place
+        from models.state import State
+        from models.amenity import Amenity
+        from models.review import Review
+
+        classes_dict = {
+            'BaseModel': BaseModel,
+            'User': User,
+            'City': City,
+            'Place': Place,
+            'State': State,
+            'Amenity': Amenity,
+            'Review': Review
+        }
+        obj = {}
         try:
-            with open(FileStorage.__file_path, "r") as file:
-                if os.stat(self.__file_path).st_size == 0:
-                    return
-                json_dict = json.load(file)
-                for key, value in json_dict.items():
-                    class_name, obj_id = key.split(".")
-                    module = importlib.import_module('models.' + class_name)
-                    cls = getattr(module, class_name)
-                    FileStorage.__objects[key] = cls(**value)
-                    '''
-                    class_ = eval(class_name)
-                    FileStorage.__objects[key] = class_(**value)
-                    '''
+            with open(FileStorage.__file_path, "r") as fp:
+                jn_data = json.load(fp)
+                for key, value in jn_data.items():
+                    obj[key] = classes_dict[value["__class__"]](**value)
+                FileStorage.__objects = obj
         except FileNotFoundError:
             pass
