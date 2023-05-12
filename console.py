@@ -12,6 +12,7 @@ from models.user import User
 from models.state import State
 from models.amenity import Amenity
 import cmd
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):

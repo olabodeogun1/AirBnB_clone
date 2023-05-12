@@ -19,6 +19,7 @@ class FileStorage:
         FileStorage.__objects[key] = obj
 
     def save(self):
+        # from models.base_model.BaseModel import to_dict
         data = {}
         for key, value in FileStorage.__objects.items():
             data[key] = value.to_dict()
