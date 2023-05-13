@@ -114,25 +114,30 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id by adding or
         updating attribute (save the change into the JSON file).
         """
-        args = args.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        elif args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        elif len(args) < 2:
-            print("** instance id missing **")
-            return
-        else:
-            key = args[0] + "." + args[1]
-            objects = storage.all()
-            if key not in objects.keys():
-                print("** no instance found **")
-                return
-            elif len(args) < 4:
+
+        my_list = parse(args)
+        key = my_obj(args)
+        if key:
+            if len(my_list) > 4:
+                print("Usage:update <class name> <id>\
+                         <aittribute name> \"<attribute value>\"")
+            elif len(my_list) == 3:
                 print("** value missing **")
-                return
+            elif len(my_list) == 2:
+                print("** attribute name missing **")
+            else:
+                my_dict = storage.all()
+                my_in = my_dict[key]
+                val = my_list[3][1:-1]
+                try:
+                    if "." in val:
+                        val = float(val)
+                    else:
+                        val = int(val)
+                except ValueError:
+                    pass
+                setattr(my_in, my_list[2], val)
+                storage.save()
 
     def do_quit(self, args):
         """
@@ -152,6 +157,37 @@ class HBNBCommand(cmd.Cmd):
         Do nothing when an empty line is entered.
         """
         pass
+
+
+def parse(arg):
+    '''
+    Splits and returns command line arguments
+    '''
+    return arg.split()
+
+def my_obj(my_line):
+
+    """returns key of an object
+    """
+
+    my_list = parse(my_line)
+    if len(my_list) == 0:
+        print("** class name missing **")
+    elif len(my_list) == 1:
+        if my_list[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+        else:
+            print("** instance id missing **")
+    elif len(my_list) >= 2:
+        if my_list[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+        else:
+            key = f"{my_list[0]}.{my_list[1]}"
+            file_dict = storage.all()
+            if key in file_dict:
+                return key
+            else:
+                print("** no instance found **")
 
 
 if __name__ == '__main__':
