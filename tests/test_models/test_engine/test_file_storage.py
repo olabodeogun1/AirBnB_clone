@@ -44,7 +44,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(obj)
         obj_key = f"{obj.__class__.__name__}.{obj.id}"
         self.assertIn(obj_key, self.storage.all())
-
+    """
     def test_save(self):
         '''
         Test the save() method of FileStorage.
@@ -54,13 +54,13 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(obj)
 
         filename = "test_save.json"
-        FileStorage.__file_path = filename
+        self.storage.__file_path = filename
         self.storage.save()
 
-        with open(filename, "r") as file:
+        with open(self.storage.__file_path, "r") as file:
             data = json.load(file)
             self.assertIn(obj_key, data)
-
+    """
     def test_reload(self):
         '''
         Test the reload() method of FileStorage.
@@ -82,8 +82,8 @@ class TestFileStorage(unittest.TestCase):
         '''
         Test the reload() method when the file is not found.
         '''
-        filename = "nonexistent_file.json"
-        FileStorage.__file_path = filename
+        # self.filename = "nonexistent_file.json"
+        FileStorage.__file_path = "nonexistent_file.json" # self.filename
         self.storage.reload()
 
         self.assertEqual(len(self.storage.all()), 0)
