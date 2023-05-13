@@ -45,7 +45,7 @@ class HBNBCommand(cmd.Cmd):
                 model = HBNBCommand.classes[args]()
                 model.save()
                 print(model.id)
-    
+
     def do_show(self, args):
         """Prints the string representation of an instance based on the class
         name and id.
@@ -88,12 +88,12 @@ class HBNBCommand(cmd.Cmd):
             if key not in objects.keys():
                 print("** no instance found **")
             else:
-                del objects[key] 
+                del objects[key]
                 storage.save()
-                 
+
     def do_all(self, args):
-        """Prints all string representation of all instances based or not on the
-        class name.
+        """Prints all string representation of all instances
+            based or not on the class name.
         """
         args = args.split()
         objects = storage.all()
@@ -133,6 +133,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(args) < 4:
                 print("** value missing **")
                 return
+
     def do_quit(self, args):
         """
         Command to exit program
@@ -151,6 +152,7 @@ class HBNBCommand(cmd.Cmd):
         Do nothing when an empty line is entered.
         """
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
