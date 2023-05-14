@@ -46,3 +46,10 @@ class BaseModel:
                 "updated_at": self.updated_at.isoformat()
         })
         return new_dict
+
+    def all(cls):
+        '''
+        For retrieving all object of a particular item
+        '''
+        obj = storage.all()
+        return [itm for itm in obj.values() if isinstance(obj, cls)]

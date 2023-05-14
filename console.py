@@ -95,10 +95,17 @@ class HBNBCommand(cmd.Cmd):
         """Prints all string representation of all instances
             based or not on the class name.
         """
-        args = args.split()
+        if '.' in args:
+            arg = args.split('.')
+        else:
+            arg = args.split()
         objects = storage.all()
         result = []
-        if len(args) == 0:
+
+        if hasattr(self.classes[arg[1]], 'all'):
+            result = self.classses[arg[0]].all()
+ 
+        elif len(arg) == 0:
             for obj in objects.values():
                 result.append(str(obj))
         elif args[0] not in self.classes:
@@ -106,7 +113,7 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             for obj in objects.values():
-                if type(obj).__name__ == args[0]:
+                if type(obj).__name__ == arg[0]:
                     result.append(str(obj))
         print(result)
 
