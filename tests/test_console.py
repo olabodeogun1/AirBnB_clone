@@ -3,6 +3,7 @@ from io import StringIO
 from unittest.mock import patch
 from console import HBNBCommand
 
+
 class ConsoleTestCase(unittest.TestCase):
     def setUp(self):
         self.console = HBNBCommand()
