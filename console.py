@@ -192,6 +192,7 @@ def my_obj(my_line):
                 print("** no instance found **")
 
 
+'''
 def display(arg):
     line = arg.split(".")
     items = []
@@ -201,6 +202,7 @@ def display(arg):
             if item.__name__ == line[0]:
                 items.append(item)
     print(items)
+'''
 
 
 if __name__ == '__main__':
