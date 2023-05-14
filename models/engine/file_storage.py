@@ -11,6 +11,13 @@ class FileStorage:
     __file_path = "file.json"
     __objects = {}
 
+    def set_file_path(self, path):
+        '''
+        Used to modify file path
+        '''
+        FileStorage.__file_path = path
+        return FileStorage.__file_path
+
     def all(self):
         return FileStorage.__objects
 

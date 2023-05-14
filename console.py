@@ -165,6 +165,7 @@ def parse(arg):
     '''
     return arg.split()
 
+
 def my_obj(my_line):
 
     """returns key of an object
