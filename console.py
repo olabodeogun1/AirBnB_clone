@@ -192,5 +192,16 @@ def my_obj(my_line):
                 print("** no instance found **")
 
 
+def display(arg):
+    line = arg.split(".")
+    items = []
+    store = storage.all()
+    if "all()" == line[1] and line[0] in HBNBCommand.classes:
+        for item in store:
+            if item.__name__ == line[0]:
+                items.append(item)
+    print(items)
+
+
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
